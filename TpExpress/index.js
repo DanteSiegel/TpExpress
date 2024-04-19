@@ -2,7 +2,8 @@ import alumnosArray from "./src/models/alumno.js"
 import {sumar, restar, multiplicar, dividir} from "./src/modules/matematica.js"
 import {OMDBSearchByPage, OMDBSearchComplete, OMDBGetByImdbID} from
 "./src/modules/omdbwrapper.js"
-import express from "express"; 
+import express from "express";    
+import ValidacionesHelper from './src/modules/validaciones-helper.js';
 
 const app = express();
 const port = 3000;
@@ -153,3 +154,62 @@ app.listen(port, () => {
 
    
 
+
+
+   app.get('/omdb/searchbypage', async (req, res) => {
+     let search = ValidacionesHelper.getStringOrDefault(req.query.search, '');
+     let p = ValidacionesHelper.getIntegerOrDefault(req.query.p, 1);
+    
+   });
+   
+
+
+
+   const express = require('express');
+const DateTimeHelper = require('./src/modules/datetime-helper');
+
+
+
+
+app.get('/fechas/isDate', (req, res) => {
+  const { fecha } = req.query;
+  if (DateTimeHelper.isDate(fecha)) {
+    res.status(200).send('Fecha válida.');
+  } else {
+    res.status(400).send('Fecha inválida.');
+  }
+});
+
+
+app.get('/fechas/getEdadActual', (req, res) => {
+  const { fechaNacimiento } = req.query;
+  const edad = DateTimeHelper.getEdadActual(fechaNacimiento);
+  res.status(200).json({ edad });
+});
+
+
+app.get('/fechas/getDiasHastaMiCumple', (req, res) => {
+  const { fechaNacimiento } = req.query;
+  const diasParaCumple = DateTimeHelper.getDiasHastaMiCumple(fechaNacimiento);
+  res.status(200).json({ diasParaCumple });
+});
+
+
+app.get('/fechas/getDiaTexto', (req, res) => {
+  const { fecha, abr } = req.query;
+  const retornarAbreviacion = abr === 'true';
+  const diaTexto = DateTimeHelper.getDiaTexto(fecha, retornarAbreviacion);
+  res.status(200).json({ dia: diaTexto });
+});
+
+
+app.get('/fechas/getMesTexto', (req, res) => {
+  const { fecha, abr } = req.query;
+  const retornarAbreviacion = abr === 'true';
+  const mesTexto = DateTimeHelper.getMesTexto(fecha, retornarAbreviacion);
+  res.status(200).json({ mes: mesTexto });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
