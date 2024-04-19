@@ -21,7 +21,7 @@ Este método recibe un 'value', e intenta convertirlo a un número entero,
      * @param {*} value valor a verificar.
      * @param {*} defaultValue valor por default en el caso de que 'value' sea
      * undefined o null.
-     * @returns Una cadena de texto.
+     * @returns Un .
      */
     getStringOrDefault = (value, defaultValue) => {
       return value === undefined || value === null ? defaultValue : value.toString();

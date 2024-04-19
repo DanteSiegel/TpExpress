@@ -5,6 +5,10 @@ import {OMDBSearchByPage, OMDBSearchComplete, OMDBGetByImdbID} from
 import express from "express";    
 import ValidacionesHelper from './src/modules/validaciones-helper.js';
 
+
+
+
+
 const app = express();
 const port = 3000;
 
@@ -165,7 +169,7 @@ app.listen(port, () => {
 
 
 
-   const express = require('express');
+
 const DateTimeHelper = require('./src/modules/datetime-helper');
 
 
