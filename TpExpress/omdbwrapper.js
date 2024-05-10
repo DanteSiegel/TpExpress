@@ -28,26 +28,26 @@ const OMDBSearchByPage = async (searchText, page = 1) => {
 
 const OMDBSearchComplete = async (searchText) => {
     try {
-        const response = await axios.get(`https://www.omdbapi.com/?apikey=${APIKEY}&s=${searchText}`);
-        if(response.data.totalResults >= 0){
-            return {
-                respuesta: true,
-                cantidadTotal: response.data.totalResults,
-                datos: response.data.Search
-            };
-        }else{
-            return {
-                respuesta: false,
-                cantidadTotal: 0,
-                datos: {}
-            };
-        }
-        } catch (error) {
-            console.error("Error en OMDBSearchByPage:", error);
-            return error;
-        }
-    };
-
+      const response = await axios.get(`https://www.omdbapi.com/?apikey=${APIKEY}&s=${searchText}`);
+      if (response.data.Response === "True") {
+        return {
+          respuesta: true,
+          cantidadTotal: response.data.totalResults,
+          datos: response.data.Search
+        };
+      } else {
+        return {
+          respuesta: false,
+          cantidadTotal: 0,
+          datos: []
+        };
+      }
+    } catch (error) {
+      console.error("Error en OMDBSearchComplete:", error);
+      throw error; 
+    }
+  };
+  
 const OMDBGetByImdbID = async (imdbID) => {
     try {
         const response = await axios.get(`https://www.omdbapi.com/?apikey=${APIKEY}&i=${imdbID}`);
